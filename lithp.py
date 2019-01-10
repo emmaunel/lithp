@@ -196,4 +196,23 @@ if __name__ == '__main__':
         sys.exit(1)
 
     for opt, arg in opts:
-        pass
+        if opt in ("--help", "-h"):
+            lithp.usage()
+            sys.exit(0)
+        elif opt in ("--debug", "-d"):
+            lithp.verbose = True
+        elif opt in ("--no-core"):
+            lithp.core = False
+        elif opt in ("--no-closures"):
+            lithp.closures = False
+        else:
+            print("unknown option " + opt)
+
+    if lithp.core:
+        lithp.process_files(["../core.lisp"])
+
+    if len(files) > 0:
+        lithp.process_files(files)
+
+    lithp.print_banner()
+    lithp.repl()
